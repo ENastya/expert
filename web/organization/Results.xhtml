@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{organizationController.selected.name}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="ИНН"/>
+                    <h:outputText value="#{organizationController.selected.inn}" title="#{bundle.ViewOrganizationTitle_inn}"/>
+                    <h:outputText value="Эксперт"/>
+                    <h:outputText value="#{organizationController.selected.expert.login}" title="#{bundle.ViewOrganizationTitle_expert}"/>
+                    <h:outputText value="Контактное лицо"/>
+                    <h:outputText value="#{organizationController.selected.user.login}" title="#{bundle.ViewOrganizationTitle_user}"/>
+                </h:panelGrid>
+                <br />
+                <h:link outcome="/organization/View" value="Назад к оценкам"/>
+                <br />
+                <br />
+                
+                <h3><h:outputText value="#{organizationController.resultMark(organizationController.selected)}"/></h3>
+                <h3><h:outputText value="Распределение граничных критериев"/></h3>
+                <div align="center" id="Org" style="width: 100%; height: 300px;"></div>
+                <br />
+                <div align="center" id="IS" style="width: 100%; height: 300px;"></div>
+                <br />
+                <h3><h:outputText value="Распределение оценок"/></h3>
+                <div id="markOrg" style="width: 99%; height: 800px;"></div>
+                 <br />
+                <div id="markIs" style="width: 99%; height: 800px;"></div>
+                
+                 <h3><h:outputText value="Статистика компании"/></h3>
+                 <br />
+                 <table align="center">
+                    <td><div align="center" id="chart_divm" style="width: 45%; height: 300px;"></div></td>    
+                    <td><div align="center" id="chart_divs" style="width: 45%; height: 300px;"></div></td>         
+                </table>    
+                
+                
+                <br />
+                <br />
+                <h:commandLink action="#{organizationController.prepareList}" value="Все организации"/>
+                <br />
+
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

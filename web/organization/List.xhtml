@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Список организаций"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListOrganizationEmpty}" rendered="#{organizationController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{organizationController.items.rowCount > 0}">
+                    <h:dataTable width="100%" value="#{organizationController.getUserItems(userController.getLoginegUser())}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Название"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="ИНН"/>
+                            </f:facet>
+                            <h:outputText value="#{item.inn}"/>
+                        </h:column>
+                        <c:if test ="#{userController.getLoginegUser().role.name.equals('user')}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Эксперт"/>
+                            </f:facet>
+                            <h:outputText value="#{item.expert.login}"/>
+                        </h:column>
+                        </c:if>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink style="color: darkblue; text-decoration: none;" action="#{organizationController.prepareView(item.id)}" value="Подробнее"/>
+                        </h:column>
+                        <c:if test ="#{userController.getLoginegUser().role.name.equals('user')}">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="&nbsp;"/>
+                                </f:facet>
+
+
+                                <h:outputText value=" "/>
+                                <h:commandLink style="color: darkblue; text-decoration: none" action="#{organizationController.prepareEdit(item.id)}" value="Изменить"/>
+
+
+                            </h:column>
+                        </c:if>
+                        <c:if test ="#{userController.getLoginegUser().role.name.equals('user')}">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="&nbsp;"/>
+                                </f:facet>
+                                <h:outputText value=" "/>
+                                <h:commandLink style="color: darkblue; text-decoration: none" action="#{organizationController.destroy}" value="Удалить"/>
+
+                            </h:column>
+                        </c:if>
+                    </h:dataTable>
+                </h:panelGroup>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

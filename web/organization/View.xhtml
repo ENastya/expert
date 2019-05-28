@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{organizationController.selected.name}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="ИНН"/>
+                    <h:outputText value="#{organizationController.selected.inn}" title="#{bundle.ViewOrganizationTitle_inn}"/>
+                    <h:outputText value="Эксперт"/>
+                    <h:outputText value="#{organizationController.selected.expert.login}" title="#{bundle.ViewOrganizationTitle_expert}"/>
+                    <h:outputText value="Контактное лицо"/>
+                    <h:outputText value="#{organizationController.selected.user.login}" title="#{bundle.ViewOrganizationTitle_user}"/>
+                </h:panelGrid>
+                <br />
+                
+                <h:link outcome="/organization/Results" value="Результаты оценки"/>
+                
+                <h2>Оценка уровня зрелости Организации</h2>
+                <h:dataTable width="100%" value="#{organizationController.markList(organizationController.selected,1)}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Группа"/>
+                        </f:facet>
+                        <h:outputText value="#{item.criterion.crgroup}"/>
+                    </h:column>   
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Критерий"/>
+                        </f:facet>
+                        <h:outputText value="#{item.criterion.name}"/>
+                    </h:column> 
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Вес"/>
+                        </f:facet>
+                        <h:outputText value="#{item.criterion.weight}"/>
+                    </h:column>
+                    <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Оценка"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mark}"/>
+                        </h:column>
+                    <c:if test ="#{userController.getLoginegUser().role.name.equals('expert')}">    
+                    <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink style="color: darkblue; text-decoration: none" action="#{markController.prepareEdit(item.id)}" value="Изменить"/>
+                        </h:column>
+                    </c:if>
+                    </h:dataTable>
+                <h2>Оценка уровня зрелости ИС</h2>
+                <h:dataTable width="100%" value="#{organizationController.markList(organizationController.selected,2)}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Группа"/>
+                        </f:facet>
+                        <h:outputText value="#{item.criterion.crgroup}"/>
+                    </h:column>   
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Критерий"/>
+                        </f:facet>
+                        <h:outputText value="#{item.criterion.name}"/>
+                    </h:column> 
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Вес"/>
+                        </f:facet>
+                        <h:outputText value="#{item.criterion.weight}"/>
+                    </h:column>
+                    <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Оценка"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mark}"/>
+                        </h:column>
+                    <c:if test ="#{userController.getLoginegUser().role.name.equals('expert')}">    
+                    <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                        <h:commandLink style="color: darkblue; text-decoration: none" action="#{markController.prepareEdit(item.id)}" value="Изменить"/>
+                    </h:column>
+                    </c:if>
+                    </h:dataTable>
+                <br />
+                <h:commandLink action="#{organizationController.prepareList}" value="Все организации"/>
+                <br />
+
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

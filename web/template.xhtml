@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <script src="https://www.google.com/jsapi"></script>
+        <script>
+            google.load("visualization", "1", {packages: ["corechart"]});
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Газ', 'Объём'],
+                    ['Характеристики контроля', #{organizationController.Grs(organizationController.selected)[0]}],
+                    ['Характеристики бизнес-процессов',  #{organizationController.Grs(organizationController.selected)[1]}],
+                    ['Характеристики процессов прогнозирования ',  #{organizationController.Grs(organizationController.selected)[2]}],
+                    ['Общие характеристики',  #{organizationController.Grs(organizationController.selected)[3]}]
+                ]);
+                var options = {
+                    title: 'Уровень зрелости организации',
+                    is3D: true,
+                    pieResidueSliceLabel: 'Остальное'
+                };
+                var chart = new google.visualization.PieChart(document.getElementById('Org'));
+                chart.draw(data, options);
+            }
+        </script>
+        <script>
+            google.load("visualization", "1", {packages: ["corechart"]});
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Газ', 'Объём'],
+                    ['Роль ИС в компании', #{organizationController.Grs(organizationController.selected)[4]}],
+                    ['Затраты на ИС',  #{organizationController.Grs(organizationController.selected)[5]}],
+                    ['Степень интеграции',  #{organizationController.Grs(organizationController.selected)[6]}],
+                    ['Общие характеристики',  #{organizationController.Grs(organizationController.selected)[7]}]
+                ]);
+                var options = {
+                    title: 'Уровень зрелости ИС',
+                    is3D: true,
+                    pieResidueSliceLabel: 'Остальное'
+                };
+                var chart = new google.visualization.PieChart(document.getElementById('IS'));
+                chart.draw(data, options);
+            }
+        </script>
+        
+         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Год', 'Прибыль (т.р.)'],
+          ['2017',  #{organizationController.money(0)/1000}],
+          ['2018',  #{organizationController.money(1)/1000}],
+          ['2019',  #{organizationController.money(2)/1000}]
+        ]);
+
+        var options = {
+          title: 'Статистика прибыли',
+          hAxis: {title: 'Год',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_divm'));
+        chart.draw(data, options);
+      }
+    </script>
+         <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Год', 'Продажи'],
+          ['2017',  #{organizationController.sales(0)}],
+          ['2018',  #{organizationController.sales(1)}],
+          ['2019',  #{organizationController.sales(2)}]
+        ]);
+
+        var options = {
+          title: 'Статистика продаж',
+          hAxis: {title: 'Год',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_divs'));
+        chart.draw(data, options);
+      }
+    </script>
+     <script src="https://www.google.com/jsapi"></script>
+  <script>
+   google.load("visualization", "1", {packages:["corechart"]});
+   google.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+     ['Критерий', 'Оценка'],
+     ['выполнения работы', #{organizationController.marks(organizationController.selected,1)[0]}],
+     ['количества договоров', #{organizationController.marks(organizationController.selected,1)[1]}],
+     ['развития специалистовь', #{organizationController.marks(organizationController.selected,1)[2]}],
+     ['повторяемость', #{organizationController.marks(organizationController.selected,1)[3]}],
+     ['управляемость', #{organizationController.marks(organizationController.selected,1)[4]}],
+     ['стандартизация', #{organizationController.marks(organizationController.selected,1)[5]}],
+     ['прогнозирование числа продления договоров', #{organizationController.marks(organizationController.selected,1)[6]}],
+     ['прогнозирование прибыли', #{organizationController.marks(organizationController.selected,1)[7]}],
+     ['прогнозирование продаж', #{organizationController.marks(organizationController.selected,1)[8]}],
+     ['наличие ЭДО', #{organizationController.marks(organizationController.selected,1)[9]}],
+     ['наличие постоянных клиентов', #{organizationController.marks(organizationController.selected,1)[10]}]
+    ]);
+    var options = {
+     title: 'Оценка уровня зрелости организации',
+     hAxis: {title: 'Критерий'},
+     vAxis: {title: 'Оценка'}
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById('markOrg'));
+    chart.draw(data, options);
+   }
+  </script>
+   <script>
+   google.load("visualization", "1", {packages:["corechart"]});
+   google.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+     ['Критерий', 'Оценка'],
+     ['доля применения ИС в бизнес-процессах', #{organizationController.marks(organizationController.selected,2)[0]}],
+     ['квалификация персонала технического отдела', #{organizationController.marks(organizationController.selected,2)[1]}],
+     ['контроль работы ИС со стороны руководства', #{organizationController.marks(organizationController.selected,2)[2]}],
+     ['поддержка ИС', #{organizationController.marks(organizationController.selected,2)[3]}],
+     ['амортизация оборудования', #{organizationController.marks(organizationController.selected,2)[4]}],
+     ['обучение персонала', #{organizationController.marks(organizationController.selected,2)[5]}],
+     ['зарплата сотрудников технического отдела', #{organizationController.marks(organizationController.selected,2)[6]}],
+     ['лицензия на сервер', #{organizationController.marks(organizationController.selected,2)[7]}],
+     ['клиентские лицензии на ИС', #{organizationController.marks(organizationController.selected,2)[8]}],
+     ['характеристики интеграции данных', #{organizationController.marks(organizationController.selected,2)[9]}],
+     ['характеристики интеграции бизнес-процессов', #{organizationController.marks(organizationController.selected,2)[10]}],
+     ['характеристики интеграции приложений', #{organizationController.marks(organizationController.selected,2)[11]}],
+     ['наличие ЭДО', #{organizationController.marks(organizationController.selected,2)[12]}],
+     ['наличие модулей аналитики', #{organizationController.marks(organizationController.selected,2)[13]}],
+     ['степень автоматизации бизнес-процессов', #{organizationController.marks(organizationController.selected,2)[14]}]
+    ]);
+    var options = {
+     title: 'Оценка уровня зрелости ИС',
+     hAxis: {title: 'Критерий'},
+     vAxis: {title: 'Оценка'}
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById('markIs'));
+    chart.draw(data, options);
+   }
+  </script>
+    </h:head>
+
+    <h:body>
+        <div style="text-align: right; background: url(https://images.wallpaperscraft.ru/image/linii_shtrikhi_sinij_fon_104907_1920x1080.jpg);" >
+
+            <br />
+            <h:form id="head">
+                <h3>
+                    <h:link style="color: #fefeff; text-decoration: none" outcome="/index" value="  На главную  "/>
+                    <c:if test ="#{userController.getLoginegUser() == null}"> 
+                        <h:link style="color: #fefeff; text-decoration: none" outcome="/user/Create" value="  Регистрация  "/>
+                        <h:link style="color: #fefeff; text-decoration: none" outcome="/user/Login" value="  Вход  "/>
+                    </c:if>
+                    <c:if test ="#{userController.getLoginegUser() != null}"> 
+                        <h:outputText style="color: aqua; text-decoration: none" value="  Вы вошли как #{userController.loginegUser.login}  "/>
+                        <h:commandLink style="color: #fefeff; text-decoration: none" action="#{userController.logout()}" value="Выйти" />
+                    </c:if>    
+                </h3>
+            </h:form>  
+            <br />
+        </div>
+        <h1>
+            <ui:insert name="title">Default Title</ui:insert>
+        </h1>
+        <p>
+            <ui:insert name="body">Default Body</ui:insert>
+        </p>
+    </h:body>
+
+</html>
